@@ -84,7 +84,8 @@ void send()
 
   bool rslt;
   rslt = radio.write( &sentData, sizeof(sentData) );
-  Serial.print(leftMotor + comma + rightMotor + comma + clawServo + comma + armMotor + comma + rotateMotor + comma + armBottomMotor + space);
+  //Serial.print(leftMotor + comma + rightMotor + comma + clawServo + comma + armMotor + comma + rotateMotor + comma + armBottomMotor + space);
+  Serial.print(sentData[0] + comma + sentData[1] + comma + sentData[2] + comma + sentData[3] + comma + sentData[4] + comma + sentData[5] + space);
   Serial.print(X + comma + Y + space);
   Serial.print(XClaw + comma + YArm + space);
   Serial.print(XRotate + comma + YArmBottom + space);
