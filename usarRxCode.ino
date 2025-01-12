@@ -13,7 +13,7 @@ Servo servoArmGrip;
 
 const byte address[5] = {'R','x','A','A','A'}; //radio address, must match transmitter's
 
-RF24 radio(48, 49); //CE and CSN pins
+RF24 radio(9, 10); //CE and CSN pins
 
 int dataReceived[6]; // this must match dataToSend in the TX, is the number of integers sent and received
 bool newData = false;
@@ -33,10 +33,10 @@ void setup() {
 
   motorDriveLeft.attach(2, 1000, 2000);
   motorDriveRight.attach(3, 1000, 2000);
-  motorArmAxis1.attach(22, 1000, 2000);
-  motorArmAxis2.attach(23, 1000, 2000);
-  motorArmAxis3.attach(24, 1000, 2000);
-  servoArmGrip.attach(25, 1000, 2000);
+  motorArmAxis1.attach(4, 1000, 2000);
+  motorArmAxis2.attach(5, 1000, 2000);
+  motorArmAxis3.attach(6, 1000, 2000);
+  servoArmGrip.attach(7, 1000, 2000);
   motorDriveLeft.write(90);
   motorDriveRight.write(90);
   motorArmAxis1.write(90);
