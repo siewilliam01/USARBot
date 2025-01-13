@@ -107,31 +107,31 @@ void limitAngle() {
   if(angleDL < motorMin) {
     angleDL = motorMin;
   }
-  if(angleDL < motorMax) {
+  if(angleDL > motorMax) {
     angleDL = motorMax;
   }
   if(angleDR < motorMin) {
     angleDR = motorMin;
   }
-  if(angleDR < motorMax) {
+  if(angleDR > motorMax) {
     angleDR = motorMax;
   }
   if(angleA1 < motorMin) {
     angleA1 = motorMin;
   }
-  if(angleA1 < motorMax) {
+  if(angleA1 > motorMax) {
     angleA1 = motorMax;
   }
   if(angleA2 < motorMin) {
     angleA2 = motorMin;
   }
-  if(angleA2 < motorMax) {
+  if(angleA2 > motorMax) {
     angleA2 = motorMax;
   }
   if(angleA3 < motorMin) {
     angleA3 = motorMin;
   }
-  if(angleA3 < motorMax) {
+  if(angleA3 > motorMax) {
     angleA3 = motorMax;
   }
 }
