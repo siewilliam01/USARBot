@@ -142,29 +142,20 @@ void movement2() //left and right motor evaluations/calcs
   Y = map(Y, 0, 180, -90, 90);
   X = map(X, 0, 180, -90, 90);
 
-  if(Y > -2) {
-    leftMotor = Y + X;
-    rightMotor = Y - X;
-  }
-  else {
-    leftMotor = Y - X;
-    rightMotor = Y + X;
-  }
+  leftMotor = Y + X;
+  rightMotor = Y - X;
+  //if(Y<0)
+  //{
+    //int temp = leftMotor;
+    //leftMotor = rightMotor;
+    //rightMotor = temp;
+  //}
 
   leftMotor = map(leftMotor, -90, 90, 0, 180);
   rightMotor = map(rightMotor, -90, 90, 0, 180);
 
   leftMotor = constrain(leftMotor, 0, 180);
   rightMotor = constrain(rightMotor, 0, 180);
-
-  if(leftMotor <= 95 && leftMotor >= 85)
-  {
-    leftMotor == 90;
-  }
-  if(rightMotor <= 95 && leftMotor >= 85)
-  {
-    rightMotor = 90;
-  }
 }
 
 void claw()
