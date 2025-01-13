@@ -89,7 +89,7 @@ void showData() {
 }
 
 void updateAngle() {
-  if(dataReceived[0] != 0 && dataReceived[1] != 0 && dataReceived[2] != 0 && dataReceived[3] != 0 && dataReceived[4] != 0 && dataReceived[5] != 0) {
+  if(newData == true && dataReceived[0] != 0 && dataReceived[1] != 0 && dataReceived[2] != 0 && dataReceived[3] != 0 && dataReceived[4] != 0 && dataReceived[5] != 0) {
     angleDL = dataReceived[0];
     angleDR = dataReceived[1];
     angleA1 = dataReceived[2];
@@ -100,14 +100,12 @@ void updateAngle() {
 }
 
 void updateMotor() {
-  if (newData == true) {
-    motorDriveLeft.write(angleDL);
-    motorDriveRight.write(angleDR);
-    motorArmAxis1.write(angleA1);
-    motorArmAxis2.write(angleA2);
-    motorArmAxis3.write(angleA3);
-    servoArmGrip.write(angleAG);
-  }
+  motorDriveLeft.write(angleDL);
+  motorDriveRight.write(angleDR);
+  motorArmAxis1.write(angleA1);
+  motorArmAxis2.write(angleA2);
+  motorArmAxis3.write(angleA3);
+  servoArmGrip.write(angleAG);
 }
 
 void failsafe() {
