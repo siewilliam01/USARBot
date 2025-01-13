@@ -25,8 +25,8 @@ int angleA2;
 int angleA3;
 int angleAG;
 
-const int motorMax = 150;
-const int motorMin = 30;
+const int motorMax = 125;
+const int motorMin = 45;
 
 const int failsafeDelay = 1000; //how long until shutdown when no signal
 int failsafeCurrentTime = 0;
