@@ -61,8 +61,8 @@ void loop() {
   //showData();
   updateAngle();
   limitAngle();
-  updateMotor();
   failsafe();
+  updateMotor();
   showMotor();
   newData = false;
 }
@@ -151,25 +151,27 @@ void failsafe() {
   }
   if (newData == false && millis() - failsafeCurrentTime >= failsafeDelay){
     Serial.println("womp womp");
-    motorDL.write(90);
-    motorDR.write(90);
-    motorA1.write(90);
-    motorA2.write(90);
-    motorA3.write(90);
+    angleDL = 90;
+    angleDR = 90;
+    angleA1 = 90;
+    angleA2 = 90;
+    angleA3 = 90;
   }
 }
 
 void showMotor() {
-  Serial.print("DL ");
-  Serial.print(angleDL);
-  Serial.print(", DR ");
-  Serial.print(angleDR);
-  Serial.print(", A1 ");
-  Serial.print(angleA1);
-  Serial.print(", A2 ");
-  Serial.print(angleA2);
-  Serial.print(", A3 ");
-  Serial.print(angleA3);
-  Serial.print(", AG ");
-  Serial.println(angleAG);
+  if(newData == true) {
+    Serial.print("DL ");
+    Serial.print(angleDL);
+    Serial.print(", DR ");
+    Serial.print(angleDR);
+    Serial.print(", A1 ");
+    Serial.print(angleA1);
+    Serial.print(", A2 ");
+    Serial.print(angleA2);
+    Serial.print(", A3 ");
+    Serial.print(angleA3);
+    Serial.print(", AG ");
+    Serial.println(angleAG);
+  }
 }
