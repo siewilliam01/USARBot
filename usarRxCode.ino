@@ -25,6 +25,9 @@ int angleA2;
 int angleA3;
 int angleAG;
 
+const int motorMax = 150;
+const int motorMin = 30;
+
 const int failsafeDelay = 1000; //how long until shutdown when no signal
 int failsafeCurrentTime = 0;
 
@@ -57,6 +60,7 @@ void loop() {
   getData();
   //showData();
   updateAngle();
+  limitAngle();
   updateMotor();
   failsafe();
   showMotor();
@@ -96,6 +100,39 @@ void updateAngle() {
     angleA2 = dataReceived[3];
     angleA3 = dataReceived[4];
     angleAG = dataReceived[5];
+  }
+}
+
+void limitAngle() {
+  if(angleDL < motorMin) {
+    angleDL = motorMin;
+  }
+  if(angleDL < motorMax) {
+    angleDL = motorMax;
+  }
+  if(angleDR < motorMin) {
+    angleDR = motorMin;
+  }
+  if(angleDR < motorMax) {
+    angleDR = motorMax;
+  }
+  if(angleA1 < motorMin) {
+    angleA1 = motorMin;
+  }
+  if(angleA1 < motorMax) {
+    angleA1 = motorMax;
+  }
+  if(angleA2 < motorMin) {
+    angleA2 = motorMin;
+  }
+  if(angleA2 < motorMax) {
+    angleA2 = motorMax;
+  }
+  if(angleA3 < motorMin) {
+    angleA3 = motorMin;
+  }
+  if(angleA3 < motorMax) {
+    angleA3 = motorMax;
   }
 }
 
