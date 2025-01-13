@@ -18,6 +18,13 @@ RF24 radio(9, 10); //CE and CSN pins
 int dataReceived[6]; // this must match dataToSend in the TX, is the number of integers sent and received
 bool newData = false;
 
+int angleDL;
+int angleDR;
+int angleA1;
+int angleA2;
+int angleA3;
+int angleAG;
+
 const int failsafeDelay = 1000; //how long until shutdown when no signal
 int failsafeCurrentTime = 0;
 
@@ -48,10 +55,11 @@ void setup() {
 
 void loop() {
   getData();
-  showData();
+  //showData();
+  updateAngle();
   updateMotor();
   failsafe();
-  //showMotor();
+  showMotor();
   newData = false;
 }
 
@@ -80,14 +88,25 @@ void showData() {
   }
 }
 
+void updateAngle() {
+  if(dataReceived[0] != 0 && dataReceived[1] != 0 && dataReceived[2] != 0 && dataReceived[3] != 0 && dataReceived[4] != 0 && dataReceived[5] != 0) {
+    angleDL = dataReceived[0];
+    angleDR = dataReceived[1];
+    angleA1 = dataReceived[2];
+    angleA2 = dataReceived[3];
+    angleA3 = dataReceived[4];
+    angleAG = dataReceived[5];
+  }
+}
+
 void updateMotor() {
   if (newData == true) {
-    motorDriveLeft.write(dataReceived[0]);
-    motorDriveRight.write(dataReceived[1]);
-    motorArmAxis1.write(dataReceived[2]);
-    motorArmAxis2.write(dataReceived[3]);
-    motorArmAxis3.write(dataReceived[4]);
-    servoArmGrip.write(dataReceived[5]);
+    motorDriveLeft.write(angleDL);
+    motorDriveRight.write(angleDR);
+    motorArmAxis1.write(angleA1);
+    motorArmAxis2.write(angleA2);
+    motorArmAxis3.write(angleA3);
+    servoArmGrip.write(angleAG);
   }
 }
 
@@ -107,15 +126,15 @@ void failsafe() {
 
 void showMotor() {
   Serial.print("DL ");
-  Serial.print(dataReceived[0]);
+  Serial.print(angleDL);
   Serial.print(", DR ");
-  Serial.print(dataReceived[1]);
+  Serial.print(angleDR);
   Serial.print(", A1 ");
-  Serial.print(dataReceived[2]);
+  Serial.print(angleA1);
   Serial.print(", A2 ");
-  Serial.print(dataReceived[3]);
+  Serial.print(angleA2);
   Serial.print(", A3 ");
-  Serial.print(dataReceived[4]);
+  Serial.print(angleA3);
   Serial.print(", AG ");
-  Serial.println(dataReceived[5]);
+  Serial.println(angleAG);
 }
