@@ -63,7 +63,7 @@ void loop() {
   limitAngle();
   failsafe();
   updateMotor();
-  showMotor();
+  showAngle();
   newData = false;
 }
 
@@ -77,7 +77,7 @@ void getData() {
 
 void showData() {
   if (newData == true) {
-    Serial.print("DL ");
+    Serial.print("showData DL ");
     Serial.print(dataReceived[0]);
     Serial.print(", DR ");
     Serial.print(dataReceived[1]);
@@ -159,9 +159,9 @@ void failsafe() {
   }
 }
 
-void showMotor() {
+void showAngle() {
   if(newData == true) {
-    Serial.print("DL ");
+    Serial.print("showAngle DL ");
     Serial.print(angleDL);
     Serial.print(", DR ");
     Serial.print(angleDR);
