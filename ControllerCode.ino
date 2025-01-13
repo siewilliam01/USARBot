@@ -87,8 +87,8 @@ void send()
   //Serial.print(leftMotor + comma + rightMotor + comma + clawServo + comma + armMotor + comma + rotateMotor + comma + armBottomMotor + space);
   Serial.print(sentData[0] + comma + sentData[1] + comma + sentData[2] + comma + sentData[3] + comma + sentData[4] + comma + sentData[5] + space);
   Serial.print(X + comma + Y + space);
-  Serial.print(XClaw + comma + YArm + space);
   Serial.print(XRotate + comma + YArmBottom + space);
+  Serial.print(XClaw + comma + YArm + space);
 
   if (rslt) 
   {
@@ -164,13 +164,13 @@ void claw()
   {
     clawServo += map(XClaw,0,180,-10,10);
   }
-  if(clawServo>180)
+  if(clawServo>179)
   {
-    clawServo = 180;
+    clawServo = 179;
   }
-  if(clawServo<0)
+  if(clawServo<10)
   {
-    clawServo = 0;
+    clawServo = 10;
   }
 }
 
