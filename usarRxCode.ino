@@ -4,12 +4,12 @@
 #include <RF24.h>
 #include <Servo.h>
 
-Servo motorDriveLeft;
-Servo motorDriveRight;
-Servo motorArmAxis1; //shoulder left and right
-Servo motorArmAxis2; //shoulder up and down
-Servo motorArmAxis3; //elbow
-Servo servoArmGrip;
+Servo motorDL;
+Servo motorDR;
+Servo motorA1; //shoulder left and right
+Servo motorA2; //shoulder up and down
+Servo motorA3; //elbow
+Servo servoAG;
 
 const byte address[5] = {'R','x','A','A','A'}; //radio address, must match transmitter's
 
@@ -41,18 +41,18 @@ void setup() {
   radio.setPALevel(RF24_PA_MIN); //loudness of radio, MIN LOW MED MAX
   radio.startListening();
 
-  motorDriveLeft.attach(2, 1000, 2000);
-  motorDriveRight.attach(3, 1000, 2000);
-  motorArmAxis1.attach(4, 1000, 2000);
-  motorArmAxis2.attach(5, 1000, 2000);
-  motorArmAxis3.attach(6, 1000, 2000);
-  servoArmGrip.attach(7, 1000, 2000);
-  motorDriveLeft.write(90);
-  motorDriveRight.write(90);
-  motorArmAxis1.write(90);
-  motorArmAxis2.write(90);
-  motorArmAxis3.write(90);
-  servoArmGrip.write(90);
+  motorDL.attach(2, 1000, 2000);
+  motorDR.attach(3, 1000, 2000);
+  motorA1.attach(4, 1000, 2000);
+  motorA2.attach(5, 1000, 2000);
+  motorA3.attach(6, 1000, 2000);
+  servoAG.attach(7, 1000, 2000);
+  motorDL.write(90);
+  motorDR.write(90);
+  motorA1.write(90);
+  motorA2.write(90);
+  motorA3.write(90);
+  servoAG.write(90);
 }
 
 
@@ -137,12 +137,12 @@ void limitAngle() {
 }
 
 void updateMotor() {
-  motorDriveLeft.write(angleDL);
-  motorDriveRight.write(angleDR);
-  motorArmAxis1.write(angleA1);
-  motorArmAxis2.write(angleA2);
-  motorArmAxis3.write(angleA3);
-  servoArmGrip.write(angleAG);
+  motorDL.write(angleDL);
+  motorDR.write(angleDR);
+  motorA1.write(angleA1);
+  motorA2.write(angleA2);
+  motorA3.write(angleA3);
+  servoAG.write(angleAG);
 }
 
 void failsafe() {
@@ -151,11 +151,11 @@ void failsafe() {
   }
   if (newData == false && millis() - failsafeCurrentTime >= failsafeDelay){
     Serial.println("womp womp");
-    motorDriveLeft.write(90);
-    motorDriveRight.write(90);
-    motorArmAxis1.write(90);
-    motorArmAxis2.write(90);
-    motorArmAxis3.write(90);
+    motorDL.write(90);
+    motorDR.write(90);
+    motorA1.write(90);
+    motorA2.write(90);
+    motorA3.write(90);
   }
 }
 
