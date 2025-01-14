@@ -53,9 +53,9 @@ void loop()
   comma = ",";
   space = "  ";
   XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
-  YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
-  XRotate = map(analogRead(VRXRotate), 0, 1023, 0, 180);
-  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
+  YArm = map(analogRead(VRYArm), 0, 1023, 45, 135);
+  XRotate = map(analogRead(VRXRotate), 0, 1023, 45, 135);
+  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 45, 135);
 
   //if(currentMillis - prevMillis >= txIntervalMillis) //freezes the output when numbers is too high or low for some reason
   //{
