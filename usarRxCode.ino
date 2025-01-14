@@ -60,7 +60,7 @@ void loop() {
   getData();
   //showData();
   updateAngle();
-  limitAngle();
+  //limitAngle();
   failsafe();
   updateMotor();
   showAngle();
@@ -94,14 +94,14 @@ void showData() {
 
 //setting each angle to the one coming in from the data, as long as there is new data and it is reasonable
 void updateAngle() {
-  if(newData == true && dataReceived[0] != 0 && dataReceived[1] != 0 && dataReceived[2] != 0 && dataReceived[3] != 0 && dataReceived[4] != 0 && dataReceived[5] != 0) {
+  //if(newData == true && dataReceived[0] != 0 && dataReceived[1] != 0 && dataReceived[2] != 0 && dataReceived[3] != 0 && dataReceived[4] != 0 && dataReceived[5] != 0) { //this condition was made to solve a problem that no longer exists
     angleDL = dataReceived[0];
     angleDR = dataReceived[1];
     angleA1 = dataReceived[2];
     angleA2 = dataReceived[3];
     angleA3 = dataReceived[4];
     angleAG = dataReceived[5];
-  }
+  //}
 }
 
 //limit the speeds if below motorMin or above motorMax
