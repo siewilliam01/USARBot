@@ -156,6 +156,15 @@ void movement2() //left and right motor evaluations/calcs
 
   leftMotor = constrain(leftMotor, 0, 180);
   rightMotor = constrain(rightMotor, 0, 180);
+
+  if(rightMotor<94 && rightMotor>86)
+  {
+    rightMotor = 90;
+  }
+  if(leftMotor<94 && leftMotor>86)
+  {
+    leftMotor = 90;
+  }
 }
 
 void claw()
@@ -177,7 +186,7 @@ void claw()
 void arm() //this does nothing
 {
   armMotor = YArm;
-  if(armMotor == 88 || armMotor == 87)
+  if(armMotor <= 89 && armMotor >= 87)
   {
     armMotor = 90;
   }
