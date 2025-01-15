@@ -27,7 +27,7 @@ int leftMotor;
 int rightMotor;
 int XClaw = 0;
 int YArm = 0;
-int clawServo;
+int clawServo = 2200;
 int armMotor;
 int XRotate = 0;
 int YArmBottom = 0;
@@ -52,9 +52,9 @@ void loop()
   Y = map(analogRead(VRY), 0, 1023, 0, 180);
   comma = ",";
   space = "  ";
-  XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
-  YArm = map(analogRead(VRYArm), 0, 1023, 45, 135);
-  XRotate = map(analogRead(VRXRotate), 0, 1023, 45, 135);
+  XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
+  YArm = map(analogRead(VRYArm), 0, 1023, 65, 115);
+  XRotate = map(analogRead(VRXRotate), 0, 1023, 80, 110);
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 45, 135);
 
   //if(currentMillis - prevMillis >= txIntervalMillis) //freezes the output when numbers is too high or low for some reason
@@ -144,12 +144,6 @@ void movement2() //left and right motor evaluations/calcs
 
   leftMotor = Y + X;
   rightMotor = Y - X;
-  //if(Y<0)
-  //{
-    //int temp = leftMotor;
-    //leftMotor = rightMotor;
-    //rightMotor = temp;
-  //}
 
   leftMotor = map(leftMotor, -90, 90, 0, 180);
   rightMotor = map(rightMotor, -90, 90, 0, 180);
@@ -161,27 +155,38 @@ void movement2() //left and right motor evaluations/calcs
   {
     rightMotor = 90;
   }
+  else
+  {
+    rightMotor = map(rightMotor, 0, 180, 0, 135);
+  }
   if(leftMotor<94 && leftMotor>86)
   {
     leftMotor = 90;
   }
+  else
+  {
+    leftMotor = map(leftMotor, 0, 180, 0, 135);
+  }
+
+
 }
 
 void claw()
 {
-  if(XClaw !=89)
+  if(!(XClaw > 1480 && XClaw < 1510))
   {
-    clawServo += map(XClaw,0,180,-10,10);
+    clawServo += map(XClaw,700,2200,100,-100);
   }
-  if(clawServo>179)
+  if(clawServo>2200)
   {
-    clawServo = 179;
+    clawServo=2200;
   }
-  if(clawServo<10)
+  if(clawServo<700)
   {
-    clawServo = 10;
+    clawServo=700;
   }
 }
+
 
 void arm() //this does nothing
 {
