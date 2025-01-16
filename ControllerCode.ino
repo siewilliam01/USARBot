@@ -27,7 +27,7 @@ int leftMotor;
 int rightMotor;
 int XClaw = 0;
 int YArm = 0;
-int clawServo = 2200;
+int clawServo;
 int armMotor;
 int XRotate = 0;
 int YArmBottom = 0;
@@ -173,17 +173,11 @@ void movement2() //left and right motor evaluations/calcs
 
 void claw()
 {
+  clawServo = 0;
   if(!(XClaw > 1480 && XClaw < 1510))
   {
-    clawServo += map(XClaw,700,2200,100,-100);
-  }
-  if(clawServo>2200)
-  {
-    clawServo=2200;
-  }
-  if(clawServo<700)
-  {
-    clawServo=700;
+    //clawServo += map(XClaw,700,2200,100,-100);
+    clawServo = map(XClaw,700,2200,100,-100);
   }
 }
 
