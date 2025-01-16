@@ -23,7 +23,7 @@ int angleDR;
 int angleA1;
 int angleA2;
 int angleA3;
-int angleAG;
+int angleAG = 2200;
 
 const int motorMin = 45;  //max speeds of motors reverse and forward in the form of servo angle
 const int motorMax = 135;
@@ -100,7 +100,15 @@ void updateAngle() {
     angleA1 = dataReceived[2];
     angleA2 = dataReceived[3];
     angleA3 = dataReceived[4];
-    angleAG = dataReceived[5];
+    angleAG += dataReceived[5];
+    if(angleAG>2200)
+    {
+      angleAG = 2200;
+    }
+    if(angleAG<700)
+    {
+      angleAG = 700;
+    }
   }
 }
 
