@@ -160,10 +160,10 @@ void arm() //A3
 {
   YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
   if(YArm <= 85) {
-    armMotor = map(YArm, 0, 90, 55, 90);
+    armMotor = map(YArm, 0, 90, 50, 90);
   }
   else if(YArm >= 95) {
-    armMotor = map(YArm, 90, 180, 90, 125);
+    armMotor = map(YArm, 90, 180, 90, 105);
   }
   else {
     armMotor = 90;
