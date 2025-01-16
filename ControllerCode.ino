@@ -53,8 +53,8 @@ void loop()
   comma = ",";
   space = "  ";
   XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
-  YArm = map(analogRead(VRYArm), 0, 1023, 65, 115);
-  XRotate = map(analogRead(VRXRotate), 0, 1023, 80, 110);
+  YArm = map(analogRead(VRYArm), 0, 1023, 55, 125);
+  XRotate = map(analogRead(VRXRotate), 0, 1023, 70, 120);
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 45, 135);
 
   //if(currentMillis - prevMillis >= txIntervalMillis) //freezes the output when numbers is too high or low for some reason
