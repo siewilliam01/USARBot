@@ -128,33 +128,60 @@ void claw() //AG
   }
 }
 
-
-void arm() //A3
-{
-  YArm = map(analogRead(VRYArm), 0, 1023, 55, 125);
-  armMotor = YArm;
-  if(armMotor <= 89 && armMotor >= 87)
-  {
-    armMotor = 90;
-  }
-}
-
 void rotate() //A1
 {
-  XRotate = map(analogRead(VRXRotate), 0, 1023, 70, 120);
-  rotateMotor = XRotate;
-  if(XRotate==89)
-  {
+  XRotate = map(analogRead(VRXRotate), 0, 1023, 0, 180);
+  if(XRotate <= 88) {
+    rotateMotor = map(XRotate, 0, 90, 70, 90);
+  }
+  else if(XRotate >= 92) {
+    rotateMotor = map(XRotate, 90, 180, 90, 120);
+  }
+  else {
     rotateMotor = 90;
   }
+  
+//  rotateMotor = XRotate;
+//  if(XRotate==89)
+//  {
+//    rotateMotor = 90;
+//  }
 }
 
 void armBottom() //A2
 {
-  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 45, 135);
-  armBottomMotor = YArmBottom;
-  if(YArmBottom > 86 && YArmBottom < 90)
-  {
+  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
+  if(VRYArmBottom <= 88) {
+    armBottomMotor = map(VRYArmBottom, 0, 90, 45, 90);
+  }
+  else if(VRYArmBottom >= 92) {
+    armBottomMotor = map(VRYArmBottom, 90, 180, 90, 135);
+  }
+  else {
     armBottomMotor = 90;
   }
+//  armBottomMotor = YArmBottom;
+//  if(YArmBottom > 86 && YArmBottom < 90)
+//  {
+//    armBottomMotor = 90;
+//  }
+}
+
+void arm() //A3
+{
+  YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
+  if(YArm <= 88) {
+    armMotor = map(YArm, 0, 90, 55, 90);
+  }
+  else if(YArm >= 92) {
+    armMotor = map(YArm, 90, 180, 90, 125);
+  }
+  else {
+    armMotor = 90;
+  }
+//  armMotor = YArm;
+//  if(armMotor <= 89 && armMotor >= 87)
+//  {
+//    armMotor = 90;
+//  }
 }
