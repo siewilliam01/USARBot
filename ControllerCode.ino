@@ -121,10 +121,10 @@ void rotate() //A1
 {
   XRotate = map(analogRead(VRXRotate), 0, 1023, 0, 180);
   if(XRotate <= 85) {
-    rotateMotor = map(XRotate, 0, 90, 70, 90);
+    rotateMotor = map(XRotate, 0, 90, 65, 90);
   }
   else if(XRotate >= 95) {
-    rotateMotor = map(XRotate, 90, 180, 90, 120);
+    rotateMotor = map(XRotate, 90, 180, 90, 135);
   }
   else {
     rotateMotor = 90;
@@ -144,9 +144,9 @@ void armBottom() //A2
     armBottomMotor = map(YArmBottom, 0, 90, 45, 90);
   }
   else if(YArmBottom >= 95) {
-    armBottomMotor = map(YArmBottom, 90, 180, 90, 135);
+    armBottomMotor = map(YArmBottom, 90, 180, 90, 145);
   }
-  else {
+  if(YArmBottom > 82 && YArmBottom <95){
     armBottomMotor = 90;
   }
 //  armBottomMotor = YArmBottom;
@@ -163,7 +163,7 @@ void arm() //A3
     armMotor = map(YArm, 0, 90, 50, 90);
   }
   else if(YArm >= 95) {
-    armMotor = map(YArm, 90, 180, 90, 105);
+    armMotor = map(YArm, 90, 180, 90, 110);
   }
   else {
     armMotor = 90;
