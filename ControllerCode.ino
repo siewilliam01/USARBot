@@ -2,18 +2,18 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-#define CE_PIN   9
-#define CSN_PIN 10
 #define VRX A1
 #define VRY A0
 #define VRXClaw A3 //these are flipped in the code here
 #define VRYArm A2
 #define VRXRotate A5 //these are flipped aswell
 #define VRYArmBottom A4
+#define greenLED 6
+#define redLED 7
 
 const byte slaveAddress[5] = {'R','x','A','A','A'};
 
-RF24 radio(CE_PIN, CSN_PIN); // Create a Radio
+RF24 radio(9, 10); // Create a Radio
 
 unsigned long currentMillis;
 unsigned long prevMillis;
@@ -43,6 +43,8 @@ void setup()
   radio.setRetries(3,5); // delay, count
   radio.openWritingPipe(slaveAddress);
   radio.setPALevel(RF24_PA_MIN);
+  pinMode(greenLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
 }
 
 void loop() 
@@ -78,10 +80,14 @@ void send()
   if (rslt) 
   {
     Serial.println(" received");
+    digitalWrite(greenLED, HIGH);
+    digitalWrite(redLED, LOW);
   }
   else 
   {
     Serial.println(" failed");
+    digitalWrite(greenLED, LOW);
+    digitalWrite(redLED, HIGH);
   }
 }
 
