@@ -33,6 +33,8 @@ int failsafeCurrentTime = 0;
 
 
 void setup() {
+  delay(2000);
+  
   Serial.begin(9600);
 
   radio.begin();
