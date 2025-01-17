@@ -134,7 +134,11 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   }
   else if(rightMotor >= 94)
   {
-    rightMotor = map(rightMotor, 90, 180, 90, 135);
+    rightMotor = map(rightMotor, 90, 180, 105, 135);
+  }
+  else if(rightMotor <= 86)
+  {
+    rightMotor = map(rightMotor, 0, 90, 0, 70);
   }
   if(leftMotor<94 && leftMotor>86)
   {
@@ -142,7 +146,11 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   }
   else if(leftMotor >= 94)
   {
-    leftMotor = map(leftMotor, 90, 180, 90, 135);
+    leftMotor = map(leftMotor, 90, 180, 105, 135);
+  }
+  else if(leftMotor <= 86)
+  {
+    leftMotor = map(leftMotor, 0, 90, 0, 70);
   }
 }
 
