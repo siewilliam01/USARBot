@@ -29,7 +29,10 @@ const int motorMin = 45;  //max speeds of motors reverse and forward in the form
 const int motorMax = 135;
 
 int failsafeActivateCurrentTime = 0;
-int CurrentTime = 0;
+int updateAngleCurrentTime = 0;
+int failsafeCurrentTime = 0;
+int updateMotorCurrentTime = 0;
+int showAngleCurrentTime = 0;
 
 void setup() {
   delay(1000);
@@ -61,13 +64,22 @@ void setup() {
 
 void loop() {
   getData();
-  if(millis() - CurrentTime > 10) {
-  CurrentTime = millis();
-  }
+  if(millis() - updateAngleCurrentTime > 10) {
   updateAngle();
+  updateAngleCurrentTime = millis();
+  }
+  if(millis() - failsafeCurrentTime > 10) {
   failsafe();
+  failsafeCurrentTime = millis();
+  }
+  if(millis() - updateMotorCurrentTime > 10) {
   updateMotor();
+  updateMotorCurrentTime = millis();
+  }
+  if(millis() - showAngleCurrentTime > 10) {
   showAngle();
+  showAngleCurrentTime = millis();
+  }
   newData = false;  //resets loop until new data comes in
 }
 
