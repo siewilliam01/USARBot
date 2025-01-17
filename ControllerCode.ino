@@ -10,6 +10,9 @@
 #define VRYArm A2
 #define VRXRotate A5 //these are flipped aswell
 #define VRYArmBottom A4
+#define SW 8
+#define LEDReceived 6
+#define LEDBinded 7
 
 const byte slaveAddress[5] = {'R','x','A','A','A'};
 
@@ -28,11 +31,13 @@ int rightMotor;
 int XClaw = 0;
 int YArm = 0;
 int clawServo;
-int armMotor;
+int armMotor = 90;
 int XRotate = 0;
 int YArmBottom = 0;
 int rotateMotor;
 int armBottomMotor;
+int button;
+int count = 0;
 
 void setup() 
 {
@@ -43,17 +48,39 @@ void setup()
   radio.setRetries(3,5); // delay, count
   radio.openWritingPipe(slaveAddress);
   radio.setPALevel(RF24_PA_MIN);
+  pinMode(SW, INPUT_PULLUP);
+  pinMode(LEDReceived, OUTPUT);
+  pinMode(LEDBinded,OUTPUT);
 }
 
 void loop() 
 {
+
+  button = digitalRead(SW);
+  if(button == 0)
+  {
+    count++;
+  }
+  if(count%2==0)
+  {
+    arm();
+    armBottom();
+    digitalWrite(LEDBinded, LOW);
+  }
+  else
+  {
+    Serial.print("binded");
+    Serial.print(space+space);
+    arm();
+    mode();
+    digitalWrite(LEDBinded, HIGH);
+  }
+  
   movement();
   claw();
-  arm();
   rotate();
-  armBottom();
   send();
-  delay(50);
+  delay(25);
 }
 
 
@@ -69,8 +96,8 @@ void send()
 
   bool rslt;
   rslt = radio.write( &sentData, sizeof(sentData) );
-  //Serial.print(leftMotor + comma + rightMotor + comma + clawServo + comma + armMotor + comma + rotateMotor + comma + armBottomMotor + space);
   Serial.print(sentData[0] + comma + sentData[1] + comma + sentData[2] + comma + sentData[3] + comma + sentData[4] + comma + sentData[5] + space + space + space);
+  Serial.print(space + button + space);
   Serial.print(X + comma + Y + space);
   Serial.print(XRotate + comma + YArmBottom + space);
   Serial.print(YArm + space + XClaw + comma);
@@ -78,10 +105,12 @@ void send()
   if (rslt) 
   {
     Serial.println(" received");
+    digitalWrite(LEDReceived, LOW);
   }
   else 
   {
     Serial.println(" failed");
+    digitalWrite(LEDReceived, HIGH);
   }
 }
 
@@ -183,5 +212,28 @@ void claw() //AG
   {
     //clawServo += map(XClaw,700,2200,100,-100);
     clawServo = map(XClaw,700,2200,100,-100);
+  }
+}
+
+void mode() // to move both armBottomMotor and arm with the same motor
+{
+  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
+  if(YArmBottom <= 85) {
+    armBottomMotor = map(YArmBottom, 0, 90, 45, 90);
+  }
+  else if(YArmBottom >= 95) {
+    armBottomMotor = map(YArmBottom, 90, 180, 90, 145);
+  }
+  if(YArmBottom > 82 && YArmBottom <95){
+    armBottomMotor = 90;
+  }
+  if(YArmBottom <= 85) {
+    armMotor = map(YArmBottom, 0, 90, 110, 90);
+  }
+  else if(YArmBottom >= 95) {
+    armMotor = map(YArmBottom, 90, 180, 90, 50);
+  }
+  else {
+    //armMotor = 90;
   }
 }
