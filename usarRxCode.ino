@@ -33,7 +33,7 @@ int failsafeCurrentTime = 0;
 
 
 void setup() {
-  delay(2000);
+  delay(1000);
   
   Serial.begin(9600);
 
@@ -55,6 +55,8 @@ void setup() {
   motorA2.write(90);
   motorA3.write(90);
   servoAG.writeMicroseconds(800);
+
+  delay(4000);
 }
 
 
