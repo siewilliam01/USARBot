@@ -28,9 +28,8 @@ int angleAG = 2200;
 const int motorMin = 45;  //max speeds of motors reverse and forward in the form of servo angle
 const int motorMax = 135;
 
-const int failsafeDelay = 1000;  //how long until shutdown when no signal
-int failsafeCurrentTime = 0;
-
+int failsafeActivateCurrentTime = 0;
+int CurrentTime = 0;
 
 void setup() {
   delay(1000);
@@ -62,9 +61,10 @@ void setup() {
 
 void loop() {
   getData();
-  //showData();
+  if(millis() - CurrentTime > 10) {
+  CurrentTime = millis();
+  }
   updateAngle();
-  //limitAngle();
   failsafe();
   updateMotor();
   showAngle();
@@ -163,9 +163,9 @@ void updateMotor() {
 //stops motors of no new data for over a second
 void failsafe() {
   if (newData == true) {
-    failsafeCurrentTime = millis();
+    failsafeActivateCurrentTime = millis();
   }
-  if (newData == false && millis() - failsafeCurrentTime >= failsafeDelay) {
+  if (newData == false && millis() - failsafeActivateCurrentTime >= 1000) {
     Serial.println("womp womp");
     angleDL = 90;
     angleDR = 90;
