@@ -38,6 +38,7 @@ int rotateMotor;
 int armBottomMotor;
 int button;
 int count = 0;
+int count2 = 0;
 
 void setup() 
 {
@@ -55,11 +56,18 @@ void setup()
 
 void loop() 
 {
-
   button = digitalRead(SW);
   if(button == 0)
   {
-    count++;
+    count2 = 1;
+  }
+  else if(button == 1)
+  {
+    if(count2 == 1)
+    {
+      count++;
+      count2 = 0;
+    }
   }
   if(count%2==1)
   {
@@ -80,7 +88,7 @@ void loop()
   claw();
   rotate();
   send();
-  delay(25);
+  //delay(25);
 }
 
 
