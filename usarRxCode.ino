@@ -28,11 +28,11 @@ int angleAG = 2200;
 const int motorMin = 45;  //max speeds of motors reverse and forward in the form of servo angle
 const int motorMax = 135;
 
-int failsafeActivateCurrentTime = 0;
-int updateAngleCurrentTime = 0;
+const int failsafeDelay = 1000;  //how long until shutdown when no signal
 int failsafeCurrentTime = 0;
-int updateMotorCurrentTime = 0;
-int showAngleCurrentTime = 0;
+int currentmillis = 0;
+int millis2 = 0;
+
 
 void setup() {
   delay(1000);
@@ -64,23 +64,16 @@ void setup() {
 
 void loop() {
   getData();
-  if(millis() - updateAngleCurrentTime > 10) {
-  updateAngle();
-  updateAngleCurrentTime = millis();
+  //currentmillis = millis() - millis2;
+  if(millis() - currentmillis >= 10)
+  {
+    updateAngle();
+    failsafe();
+    updateMotor();
+    showAngle();
+    currentmillis = millis();
+    newData = false;  //resets loop until new data comes in
   }
-  if(millis() - failsafeCurrentTime > 10) {
-  failsafe();
-  failsafeCurrentTime = millis();
-  }
-  if(millis() - updateMotorCurrentTime > 10) {
-  updateMotor();
-  updateMotorCurrentTime = millis();
-  }
-  if(millis() - showAngleCurrentTime > 10) {
-  showAngle();
-  showAngleCurrentTime = millis();
-  }
-  newData = false;  //resets loop until new data comes in
 }
 
 //read data coming in from radio if it is available
@@ -88,23 +81,6 @@ void getData() {
   if (radio.available()) {
     radio.read(dataReceived, sizeof(dataReceived));  //reading the data
     newData = true;                                  //used by several functions which will only run when there is new data
-  }
-}
-
-void showData() {
-  if (newData == true) {
-    Serial.print("showData DL ");
-    Serial.print(dataReceived[0]);
-    Serial.print(", DR ");
-    Serial.print(dataReceived[1]);
-    Serial.print(", A1 ");
-    Serial.print(dataReceived[2]);
-    Serial.print(", A2 ");
-    Serial.print(dataReceived[3]);
-    Serial.print(", A3 ");
-    Serial.print(dataReceived[4]);
-    Serial.print(", AG ");
-    Serial.println(dataReceived[5]);
   }
 }
 
@@ -128,40 +104,6 @@ void updateAngle() {
   }
 }
 
-//limit the speeds if below motorMin or above motorMax
-void limitAngle() {
-  if (angleDL < motorMin) {
-    angleDL = motorMin;
-  }
-  if (angleDL > motorMax) {
-    angleDL = motorMax;
-  }
-  if (angleDR < motorMin) {
-    angleDR = motorMin;
-  }
-  if (angleDR > motorMax) {
-    angleDR = motorMax;
-  }
-  if (angleA1 < motorMin) {
-    angleA1 = motorMin;
-  }
-  if (angleA1 > motorMax) {
-    angleA1 = motorMax;
-  }
-  if (angleA2 < motorMin) {
-    angleA2 = motorMin;
-  }
-  if (angleA2 > motorMax) {
-    angleA2 = motorMax;
-  }
-  if (angleA3 < motorMin) {
-    angleA3 = motorMin;
-  }
-  if (angleA3 > motorMax) {
-    angleA3 = motorMax;
-  }
-}
-
 //send angles into servo library and send to pins as pwm, not newData == true because must be continuous
 void updateMotor() {
   motorDL.write(angleDL);
@@ -175,9 +117,9 @@ void updateMotor() {
 //stops motors of no new data for over a second
 void failsafe() {
   if (newData == true) {
-    failsafeActivateCurrentTime = millis();
+    failsafeCurrentTime = millis();
   }
-  if (newData == false && millis() - failsafeActivateCurrentTime >= 1000) {
+  if (newData == false && millis() - failsafeCurrentTime >= failsafeDelay) {
     Serial.println("womp womp");
     angleDL = 90;
     angleDR = 90;
