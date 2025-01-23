@@ -56,37 +56,39 @@ void setup()
 
 void loop() 
 {
-  button = digitalRead(SW);
-  if(button == 0)
-  {
-    count2 = 1;
-  }
-  else if(button == 1)
-  {
-    if(count2 == 1)
-    {
-      count++;
-      count2 = 0;
-    }
-  }
-  if(count%2==1)
-  {
-    arm();
-    armBottom();
-    digitalWrite(LEDBinded, LOW);
-  }
-  else
-  {
-    Serial.print("binded");
-    Serial.print(space+space);
-    arm();
-    mode();
-    digitalWrite(LEDBinded, HIGH);
-  }
+  // button = digitalRead(SW);
+  // if(button == 0)
+  // {
+  //   count2 = 1;
+  // }
+  // else if(button == 1)
+  // {
+  //   if(count2 == 1)
+  //   {
+  //     count++;
+  //     count2 = 0;
+  //   }
+  // }
+  // if(count%2==1)
+  // {
+  //   arm();
+  //   armBottom();
+  //   digitalWrite(LEDBinded, LOW);
+  // }
+  // else
+  // {
+  //   Serial.print("binded");
+  //   Serial.print(space+space);
+  //   arm();
+  //   mode();
+  //   digitalWrite(LEDBinded, HIGH);
+  // }
   
   movement();
-  claw();
   rotate();
+  armBottom();
+  arm();
+  claw();
   send();
   //delay(25);
 }
@@ -142,7 +144,7 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   }
   else if(rightMotor >= 94)
   {
-    rightMotor = map(rightMotor, 90, 180, 105, 135);
+    rightMotor = map(rightMotor, 90, 180, 105, 180);
   }
   else if(rightMotor <= 86)
   {
@@ -154,7 +156,7 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   }
   else if(leftMotor >= 94)
   {
-    leftMotor = map(leftMotor, 90, 180, 105, 135);
+    leftMotor = map(leftMotor, 90, 180, 105, 180);
   }
   else if(leftMotor <= 86)
   {
@@ -174,22 +176,16 @@ void rotate() //A1
   else {
     rotateMotor = 90;
   }
-  
-//  rotateMotor = XRotate;
-//  if(XRotate==89)
-//  {
-//    rotateMotor = 90;
-//  }
 }
 
 void armBottom() //A2
 {
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
   if(YArmBottom <= 85) {
-    armBottomMotor = map(YArmBottom, 0, 90, 45, 90);
+    armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
   }
   else if(YArmBottom >= 95) {
-    armBottomMotor = map(YArmBottom, 90, 180, 90, 145);
+    armBottomMotor = map(YArmBottom, 90, 180, 90, 180);
   }
   if(YArmBottom > 82 && YArmBottom <95){
     armBottomMotor = 90;
@@ -205,19 +201,14 @@ void arm() //A3
 {
   YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
   if(YArm <= 85) {
-    armMotor = map(YArm, 0, 90, 50, 90);
+    armMotor = map(YArm, 0, 90, 0, 90);
   }
   else if(YArm >= 95) {
-    armMotor = map(YArm, 90, 180, 90, 110);
+    armMotor = map(YArm, 90, 180, 90, 180);
   }
   else {
     armMotor = 90;
   }
-//  armMotor = YArm;
-//  if(armMotor <= 89 && armMotor >= 87)
-//  {
-//    armMotor = 90;
-//  }
 }
 
 void claw() //AG
@@ -235,10 +226,10 @@ void mode() // to move both armBottomMotor and arm with the same motor
 {
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
   if(YArmBottom <= 85) {
-    armBottomMotor = map(YArmBottom, 0, 90, 45, 90);
+    armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
   }
   else if(YArmBottom >= 95) {
-    armBottomMotor = map(YArmBottom, 90, 180, 90, 145);
+    armBottomMotor = map(YArmBottom, 90, 180, 90, 180);
   }
   if(YArmBottom > 82 && YArmBottom <95){
     armBottomMotor = 90;
