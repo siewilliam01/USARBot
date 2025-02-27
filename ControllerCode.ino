@@ -215,10 +215,18 @@ void claw() //AG
 {
   XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
   clawServo = 0;
-  if(!(XClaw > 1480 && XClaw < 1510))
-  {
+  //if(!(XClaw > 1480 && XClaw < 1510))
+  //{
     //clawServo += map(XClaw,700,2200,100,-100);
-    clawServo = map(XClaw,700,2200,100,-100);
+    //clawServo = map(XClaw,700,2200,100,-100);
+  //}
+  if(xClaw>1510)
+  {
+    clawServo = 0
+  }
+  elif(xClaw<1480)
+  {
+    clawServo = 180
   }
 }
 
