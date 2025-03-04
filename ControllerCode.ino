@@ -96,7 +96,6 @@ void loop()
 
 void send() 
 {
-  int sentData[6];
   sentData[0] = leftMotor;
   sentData[1] = rightMotor;
   sentData[5] = clawServo;
@@ -107,7 +106,7 @@ void send()
   bool rslt;
   rslt = radio.write( &sentData, sizeof(sentData) );
   Serial.print(sentData[0] + comma + sentData[1] + comma + sentData[2] + comma + sentData[3] + comma + sentData[4] + comma + sentData[5] + space + space + space);
-  Serial.print(space + button + space);
+  //Serial.print(space + button + space);
   Serial.print(X + comma + Y + space);
   Serial.print(XRotate + comma + YArmBottom + space);
   Serial.print(YArm + space + XClaw + comma);
@@ -214,19 +213,19 @@ void arm() //A3
 void claw() //AG
 {
   XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
-  clawServo = 0;
+  clawServo = 90;
   //if(!(XClaw > 1480 && XClaw < 1510))
   //{
     //clawServo += map(XClaw,700,2200,100,-100);
     //clawServo = map(XClaw,700,2200,100,-100);
   //}
-  if(xClaw>1510)
+  if(XClaw>1510)
   {
-    clawServo = 0
+    clawServo = 0;
   }
-  elif(xClaw<1480)
+  else if(XClaw<1480)
   {
-    clawServo = 180
+    clawServo = 180;
   }
 }
 
