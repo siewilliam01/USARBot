@@ -1,4 +1,3 @@
-//Rx code
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -23,7 +22,6 @@ int angleDR;
 int angleA1;
 int angleA2;
 int angleA3;
-//int angleAG = 2200;
 int angleAG;
 
 const int motorMin = 45;  //max speeds of motors reverse and forward in the form of servo angle
@@ -57,7 +55,6 @@ void setup() {
   motorA1.write(90);
   motorA2.write(90);
   motorA3.write(90);
-  //servoAG.writeMicroseconds(800);
   servoAG.write(0);
 
   delay(4000);
@@ -66,7 +63,6 @@ void setup() {
 
 void loop() {
   getData();
-  //currentmillis = millis() - millis2;
   if(millis() - currentmillis >= 10)
   {
     updateAngle();
@@ -94,16 +90,7 @@ void updateAngle() {
     angleA1 = dataReceived[2];
     angleA2 = dataReceived[3];
     angleA3 = dataReceived[4];
-    //angleAG += dataReceived[5];
     angleAG = dataReceived[5];
-    //if(angleAG>2200)
-    //{
-      //angleAG = 2200;
-    //}
-    //if(angleAG<700)
-    //{
-      //angleAG = 700;
-    //}
   }
 }
 
@@ -114,7 +101,6 @@ void updateMotor() {
   motorA1.write(angleA1);
   motorA2.write(angleA2);
   motorA3.write(angleA3);
-  //servoAG.writeMicroseconds(angleAG);
   servoAG.write(angleAG);
 }
 
@@ -133,6 +119,7 @@ void failsafe() {
   }
 }
 
+//just print statements to console
 void showAngle() {
   if (newData == true) {
     Serial.print("showAngle DL ");
