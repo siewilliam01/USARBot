@@ -10,9 +10,7 @@
 #define VRYArm A2
 #define VRXRotate A5 //these are flipped aswell
 #define VRYArmBottom A4
-#define SW 8
 #define LEDReceived 6
-#define LEDBinded 7
 
 const byte slaveAddress[5] = {'R','x','A','A','A'};
 
@@ -22,23 +20,24 @@ unsigned long currentMillis;
 unsigned long prevMillis;
 unsigned long txIntervalMillis = 1000; // send once per second
 
+//the positions of the joysticks
 int X = 0;
 int Y = 0;
-String comma = ", ";
-String space = "  ";
-int leftMotor;
-int rightMotor;
 int XClaw = 0;
 int YArm = 0;
-int clawServo;
-int armMotor = 90;
 int XRotate = 0;
 int YArmBottom = 0;
+
+//the actual value sent to the robot
+int leftMotor;
+int rightMotor;
+int clawServo;
+int armMotor = 90;
 int rotateMotor;
 int armBottomMotor;
-int button;
-int count = 0;
-int count2 = 0;
+
+String comma = ", ";
+String space = "  ";
 
 void setup() 
 {
@@ -55,42 +54,13 @@ void setup()
 }
 
 void loop() 
-{
-  // button = digitalRead(SW);
-  // if(button == 0)
-  // {
-  //   count2 = 1;
-  // }
-  // else if(button == 1)
-  // {
-  //   if(count2 == 1)
-  //   {
-  //     count++;
-  //     count2 = 0;
-  //   }
-  // }
-  // if(count%2==1)
-  // {
-  //   arm();
-  //   armBottom();
-  //   digitalWrite(LEDBinded, LOW);
-  // }
-  // else
-  // {
-  //   Serial.print("binded");
-  //   Serial.print(space+space);
-  //   arm();
-  //   mode();
-  //   digitalWrite(LEDBinded, HIGH);
-  // }
-  
+{ 
   movement();
   rotate();
   armBottom();
   arm();
   claw();
   send();
-  //delay(25);
 }
 
 
@@ -106,12 +76,11 @@ void send()
   bool rslt;
   rslt = radio.write( &sentData, sizeof(sentData) );
   Serial.print(sentData[0] + comma + sentData[1] + comma + sentData[2] + comma + sentData[3] + comma + sentData[4] + comma + sentData[5] + space + space + space);
-  //Serial.print(space + button + space);
   Serial.print(X + comma + Y + space);
   Serial.print(XRotate + comma + YArmBottom + space);
   Serial.print(YArm + space + XClaw + comma);
 
-  if (rslt) 
+  if (rslt) //this if/else will make the LED flash red if the robot is not receiving, and will turn the LED off if it is receiving
   {
     Serial.println(" received");
     digitalWrite(LEDReceived, LOW);
@@ -136,8 +105,8 @@ void movement() //left and right motor evaluations/calcs, DL and DR
 
   leftMotor = constrain(leftMotor, 0, 180);
   rightMotor = constrain(rightMotor, 0, 180);
-
-  if(rightMotor<94 && rightMotor>86)
+ 
+  if(rightMotor<94 && rightMotor>86) //to account for the variability in the centering
   {
     rightMotor = 90;
   }
@@ -166,7 +135,8 @@ void movement() //left and right motor evaluations/calcs, DL and DR
 void rotate() //A1
 {
   XRotate = map(analogRead(VRXRotate), 0, 1023, 0, 180);
-  if(XRotate <= 85) {
+  
+  if(XRotate <= 85) { //to account for the variability in the centering
     rotateMotor = map(XRotate, 0, 90, 65, 90);
   }
   else if(XRotate >= 95) {
@@ -180,7 +150,8 @@ void rotate() //A1
 void armBottom() //A2
 {
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
-  if(YArmBottom <= 85) {
+  
+  if(YArmBottom <= 85) { //to account for the variability in the centering
     armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
   }
   else if(YArmBottom >= 95) {
@@ -189,17 +160,13 @@ void armBottom() //A2
   if(YArmBottom > 82 && YArmBottom <95){
     armBottomMotor = 90;
   }
-//  armBottomMotor = YArmBottom;
-//  if(YArmBottom > 86 && YArmBottom < 90)
-//  {
-//    armBottomMotor = 90;
-//  }
 }
 
 void arm() //A3
 {
   YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
-  if(YArm <= 85) {
+  
+  if(YArm <= 85) { //to account for the variability in the joystick centering
     armMotor = map(YArm, 0, 90, 0, 90);
   }
   else if(YArm >= 95) {
@@ -213,12 +180,8 @@ void arm() //A3
 void claw() //AG
 {
   XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
-  clawServo = 90;
-  //if(!(XClaw > 1480 && XClaw < 1510))
-  //{
-    //clawServo += map(XClaw,700,2200,100,-100);
-    //clawServo = map(XClaw,700,2200,100,-100);
-  //}
+  
+  clawServo = 90; //idk
   if(XClaw>1510)
   {
     clawServo = 0;
@@ -226,28 +189,5 @@ void claw() //AG
   else if(XClaw<1480)
   {
     clawServo = 180;
-  }
-}
-
-void mode() // to move both armBottomMotor and arm with the same motor
-{
-  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
-  if(YArmBottom <= 85) {
-    armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
-  }
-  else if(YArmBottom >= 95) {
-    armBottomMotor = map(YArmBottom, 90, 180, 90, 180);
-  }
-  if(YArmBottom > 82 && YArmBottom <95){
-    armBottomMotor = 90;
-  }
-  if(YArmBottom <= 85) {
-    armMotor = map(YArmBottom, 0, 90, 110, 90);
-  }
-  else if(YArmBottom >= 95) {
-    armMotor = map(YArmBottom, 90, 180, 90, 50);
-  }
-  else {
-    //armMotor = 90;
   }
 }
