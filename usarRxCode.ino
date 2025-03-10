@@ -55,7 +55,7 @@ void setup() {
   motorA1.write(90);
   motorA2.write(90);
   motorA3.write(90);
-  servoAG.write(0);
+  servoAG.write(90);
 
   delay(4000);
 }
@@ -116,6 +116,7 @@ void failsafe() {
     angleA1 = 90;
     angleA2 = 90;
     angleA3 = 90;
+    angleAG = 90;
   }
 }
 
