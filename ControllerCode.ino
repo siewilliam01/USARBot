@@ -48,9 +48,7 @@ void setup()
   radio.setRetries(3,5); // delay, count
   radio.openWritingPipe(slaveAddress);
   radio.setPALevel(RF24_PA_MIN);
-  pinMode(SW, INPUT_PULLUP);
   pinMode(LEDReceived, OUTPUT);
-  pinMode(LEDBinded,OUTPUT);
 }
 
 void loop() 
@@ -66,6 +64,7 @@ void loop()
 
 void send() 
 {
+  int sentData[6];
   sentData[0] = leftMotor;
   sentData[1] = rightMotor;
   sentData[5] = clawServo;
@@ -182,11 +181,11 @@ void claw() //AG
   XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
   
   clawServo = 90; //idk
-  if(XClaw>160)
+  if(XClaw>170)
   {
     clawServo = 0;
   }
-  else if(XClaw<20)
+  else if(XClaw<10)
   {
     clawServo = 180;
   }
