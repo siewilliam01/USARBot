@@ -179,14 +179,14 @@ void arm() //A3
 
 void claw() //AG
 {
-  XClaw = map(analogRead(VRXClaw), 0, 1023, 800, 2200);
+  XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
   
   clawServo = 90; //idk
-  if(XClaw>1510)
+  if(XClaw>160)
   {
     clawServo = 0;
   }
-  else if(XClaw<1480)
+  else if(XClaw<20)
   {
     clawServo = 180;
   }
