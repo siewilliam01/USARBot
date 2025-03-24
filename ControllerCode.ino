@@ -64,6 +64,7 @@ void loop()
 
 void send() 
 {
+
   int sentData[6];
   sentData[0] = leftMotor;
   sentData[1] = rightMotor;
@@ -93,8 +94,8 @@ void send()
 
 void movement() //left and right motor evaluations/calcs, DL and DR
 {
-  X = map(analogRead(VRX), 0, 1023, -90, 90);
-  Y = map(analogRead(VRY), 0, 1023, -90, 90);
+  X = map(analogRead(VRX), 0, 1023, 90, -90);
+  Y = map(analogRead(VRY), 0, 1023, 90, -90);
   
   leftMotor = Y - X;
   rightMotor = Y + X;
@@ -105,29 +106,29 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   leftMotor = constrain(leftMotor, 0, 180);
   rightMotor = constrain(rightMotor, 0, 180);
  
-  if(rightMotor<94 && rightMotor>86) //to account for the variability in the centering
+  if(rightMotor<101 && rightMotor>82) //to account for the variability in the centering
   {
     rightMotor = 90;
   }
-  else if(rightMotor >= 94)
+  else if(rightMotor >= 100)
   {
-    rightMotor = map(rightMotor, 90, 180, 105, 180);
+    //rightMotor = map(rightMotor, 90, 180, 105, 180);
   }
   else if(rightMotor <= 86)
   {
-    rightMotor = map(rightMotor, 0, 90, 0, 70);
+    //rightMotor = map(rightMotor, 0, 90, 0, 70);
   }
-  if(leftMotor<94 && leftMotor>86)
+  if(leftMotor<101 && leftMotor>86)
   {
     leftMotor = 90;
   }
-  else if(leftMotor >= 94)
+  else if(leftMotor >= 100)
   {
-    leftMotor = map(leftMotor, 90, 180, 105, 180);
+    //leftMotor = map(leftMotor, 90, 180, 105, 180);
   }
   else if(leftMotor <= 86)
   {
-    leftMotor = map(leftMotor, 0, 90, 0, 70);
+    //leftMotor = map(leftMotor, 0, 90, 0, 70);
   }
 }
 
@@ -181,7 +182,7 @@ void claw() //AG
   XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
   
   clawServo = 90; //idk
-  if(XClaw>170)
+  if(XClaw>150)
   {
     clawServo = 0;
   }
