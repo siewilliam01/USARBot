@@ -49,7 +49,7 @@ void setup() {
   motorA1.attach(4, 1000, 2000);
   motorA2.attach(5, 1000, 2000);
   motorA3.attach(6, 1000, 2000);
-  servoAG.attach(7);
+  servoAG.attach(7, 1000, 2000);
   motorDL.write(90);  //set motors to neutral
   motorDR.write(90);
   motorA1.write(90);
