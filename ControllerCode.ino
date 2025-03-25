@@ -134,7 +134,7 @@ void movement() //left and right motor evaluations/calcs, DL and DR
 
 void rotate() //A1
 {
-  XRotate = map(analogRead(VRXRotate), 0, 1023, 0, 180);
+  XRotate = map(analogRead(VRXRotate), 0, 1023, 180, 0);
   
   if(XRotate <= 85) { //to account for the variability in the centering
     rotateMotor = map(XRotate, 0, 90, 65, 90);
@@ -149,7 +149,7 @@ void rotate() //A1
 
 void armBottom() //A2
 {
-  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
+  YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 180, 0);
   
   if(YArmBottom <= 85) { //to account for the variability in the centering
     armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
@@ -164,7 +164,7 @@ void armBottom() //A2
 
 void arm() //A3
 {
-  YArm = map(analogRead(VRYArm), 0, 1023, 0, 180);
+  YArm = map(analogRead(VRYArm), 0, 1023, 180, 0);
   
   if(YArm <= 85) { //to account for the variability in the joystick centering
     armMotor = map(YArm, 0, 90, 0, 90);
@@ -179,15 +179,15 @@ void arm() //A3
 
 void claw() //AG
 {
-  XClaw = map(analogRead(VRXClaw), 0, 1023, 0, 180);
+  XClaw = map(analogRead(VRXClaw), 0, 1023, 180, 0);
   
-  clawServo = 90; //idk
+  clawServo = XClaw; //idk
   if(XClaw>150)
   {
-    clawServo = 0;
+    //clawServo = 0;
   }
   else if(XClaw<10)
   {
-    clawServo = 180;
+    //clawServo = 180;
   }
 }
