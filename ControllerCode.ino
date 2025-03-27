@@ -100,8 +100,8 @@ void movement() //left and right motor evaluations/calcs, DL and DR
   leftMotor = Y - X;
   rightMotor = Y + X;
 
-  leftMotor = map(leftMotor, -90, 90, 0, 180);
-  rightMotor = map(rightMotor, -90, 90, 0, 180);
+  leftMotor = map(leftMotor, -90, 90, 15, 180);
+  rightMotor = map(rightMotor, -90, 90, 15, 180);
 
   leftMotor = constrain(leftMotor, 0, 180);
   rightMotor = constrain(rightMotor, 0, 180);
