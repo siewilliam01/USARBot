@@ -151,13 +151,13 @@ void armBottom() //A2
 {
   YArmBottom = map(analogRead(VRYArmBottom), 0, 1023, 0, 180);
   
-  if(YArmBottom <= 85) { //to account for the variability in the centering
+  if(YArmBottom <= 80) { //to account for the variability in the centering
     armBottomMotor = map(YArmBottom, 0, 90, 0, 90);
   }
-  else if(YArmBottom >= 95) {
+  else if(YArmBottom >= 100) {
     armBottomMotor = map(YArmBottom, 90, 180, 90, 180);
   }
-  if(YArmBottom > 82 && YArmBottom <95){
+  if(YArmBottom > 80 && YArmBottom <100){
     armBottomMotor = 90;
   }
 }
